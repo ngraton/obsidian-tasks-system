@@ -329,6 +329,14 @@ sort by function task.happens.format("dddd")
 
 <!-- placeholder to force blank line after included text --><!-- endInclude -->
 
+### Top 3 Date
+
+- `sort by top3` (the most recent Top 3 date)
+
+Tasks are sorted by their **latest** (most recent) Top 3 date. Tasks with no Top 3 dates are sorted last.
+
+For more information, see [[Top3|Top 3 Dates]].
+
 ## Sort by Other Task Properties
 
 ### Description

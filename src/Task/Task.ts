@@ -91,7 +91,7 @@ export class Task extends ListItem {
         onCompletion,
         dependsOn,
         id,
-        top3Dates,
+        top3Dates = [],
         blockLink,
         tags,
         originalMarkdown,

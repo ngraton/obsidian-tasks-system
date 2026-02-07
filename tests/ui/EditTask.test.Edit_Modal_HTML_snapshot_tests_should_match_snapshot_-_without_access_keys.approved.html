@@ -47,9 +47,15 @@
       </div>
     </section>
     <hr id="line-after-priority" />
-    <section class="tasks-modal-top3dates-section">
-      <label for="top3Dates">🎯 Top 3 Dates</label>
-      <input id="top3Dates" type="text" class="tasks-modal-top3dates" placeholder="2026-02-03,2026-02-04" />
+    <section class="tasks-modal-dates-section">
+      <label for="top3Dates">Top 3 Dates</label>
+      <div class="tasks-modal-top3dates-container svelte-13k6fxr">
+        <div class="tasks-modal-top3dates-input-row svelte-13k6fxr">
+          <input id="top3Dates" type="text" class="tasks-modal-date-input" placeholder="Try 'td' or 'Mon' then Enter" />
+          <input class="tasks-modal-date-editor-picker" type="date" tabindex="-1" />
+          <button type="button" class="tasks-modal-top3dates-add svelte-13k6fxr" disabled="">Add</button>
+        </div>
+      </div>
     </section>
     <hr id="line-after-top3dates" />
     <section class="tasks-modal-dates-section">

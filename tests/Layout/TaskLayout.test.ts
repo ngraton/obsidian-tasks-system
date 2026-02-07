@@ -24,7 +24,10 @@ describe('TaskLayout tests', () => {
         // Negate all the query layout boolean values:
         Object.keys(queryLayoutOptions).forEach((key) => {
             const key2 = key as keyof QueryLayoutOptions;
-            queryLayoutOptions[key2] = !queryLayoutOptions[key2];
+            const value = queryLayoutOptions[key2];
+            if (typeof value === 'boolean') {
+                (queryLayoutOptions as unknown as Record<string, boolean>)[key2] = !value;
+            }
         });
 
         const taskLayout = new TaskLayout(taskLayoutOptions);

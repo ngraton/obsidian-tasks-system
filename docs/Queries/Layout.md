@@ -30,6 +30,7 @@ The following task elements exist:
 - `recurrence rule`
 - `on completion`
 - `tags`
+- `top3 dates`
 
 All of these task elements are shown by default, so you will use the command `hide`
 if you do not want to show any of them.
@@ -190,6 +191,26 @@ Example:
     ```
 
 This can be reversed with [[#Full Mode]].
+
+## Top 3 Display Mode
+
+The Top 3 field can display its data in three different formats using the `top3 display` command:
+
+- `top3 display all` - Shows all dates (default): `🎯 2026-02-01,2026-02-03`
+- `top3 display latest` - Shows only the most recent date: `🎯 2026-02-03`
+- `top3 display count` - Shows count instead of dates: `🎯 2`
+
+Example:
+
+    ```tasks
+    has top3 date
+    top3 display count
+    group by top3
+    ```
+
+This is useful when you want a cleaner display or when grouping tasks by their Top 3 count.
+
+For more information about Top 3 dates, see [[Top3|Top 3 Dates]].
 
 ## Alternative to typing layout instructions
 

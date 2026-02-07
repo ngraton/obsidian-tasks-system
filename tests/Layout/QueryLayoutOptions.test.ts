@@ -12,7 +12,7 @@ describe('parsing query show/hide layout options', () => {
         ['edit button', 'hideEditButton', false],
         ['postpone button', 'hidePostponeButton', false],
         ['task count', 'hideTaskCount', false],
-        ['toolbar', 'hideToolbar', false],
+        ['toolbar', 'hideToolbar', true],
         ['tree', 'hideTree', true],
         ['urgency', 'hideUrgency', true],
     ];

@@ -13,6 +13,7 @@
     import PriorityEditor from './PriorityEditor.svelte';
     import RecurrenceEditor from './RecurrenceEditor.svelte';
     import StatusEditor from './StatusEditor.svelte';
+    import Top3DateEditor from './Top3DateEditor.svelte';
 
     // These exported variables are passed in as props by TaskModal.onOpen():
     export let task: Task;
@@ -171,14 +172,11 @@ Availability of access keys:
     <!--  Top 3 Dates  -->
     <!-- --------------------------------------------------------------------------- -->
     {#if isShownInEditModal.top3Dates}
-        <section class="tasks-modal-top3dates-section">
-            <label for="top3Dates">{top3DateSymbol} Top 3 Dates</label>
-            <input
-                bind:value={editableTask.top3Dates}
-                id="top3Dates"
-                type="text"
-                class="tasks-modal-top3dates"
-                placeholder="2026-02-03,2026-02-04"
+        <section class="tasks-modal-dates-section">
+            <Top3DateEditor
+                dateSymbol={top3DateSymbol}
+                bind:dates={editableTask.top3Dates}
+                accesskey={accesskey('3')}
             />
         </section>
         <hr id="line-after-top3dates" />

@@ -893,6 +893,31 @@ filter by function task.happens.format('dddd') === 'Friday'
 
 For more examples, see [[#Due Date]].
 
+### Top 3 Date
+
+- `no top3 date`
+- `has top3 date`
+- `top3 (on|before|after|on or before|on or after) <date>`
+- `top3 (in|before|after|in or before|in or after) <date range>`
+  - `YYYY-MM-DD YYYY-MM-DD`
+  - `(last|this|next) (week|month|quarter|year)`
+  - `(YYYY-Www|YYYY-mm|YYYY-Qq|YYYY)`
+- `top3 count (>|>=|<|<=|=|is) <number>`
+
+For more information, see [[Top3|Top 3 Dates]].
+
+> [!info]
+> When a task has multiple Top 3 dates, the date filter checks only the **latest** (most recent) date.
+
+Examples:
+
+```text
+top3 on today
+top3 this week
+top3 count >= 3
+has top3 date
+```
+
 ### Troubleshooting date searches
 
 If your date searches are giving unexpected results, add an [[Explaining Queries|explain]] line to your query.

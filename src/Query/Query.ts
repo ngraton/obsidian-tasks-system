@@ -1,6 +1,6 @@
 import { getSettings } from '../Config/Settings';
 import type { IQuery } from '../IQuery';
-import { QueryLayoutOptions, parseQueryShowHideOptions } from '../Layout/QueryLayoutOptions';
+import { QueryLayoutOptions, Top3DisplayMode, parseQueryShowHideOptions } from '../Layout/QueryLayoutOptions';
 import { TaskLayoutOptions, parseTaskShowHideOptions } from '../Layout/TaskLayoutOptions';
 import { errorMessageForException } from '../lib/ExceptionTools';
 import { logging } from '../lib/logging';
@@ -51,6 +51,7 @@ export class Query implements IQuery {
     private readonly fullModeRegexp = /^full/i;
     private readonly explainQueryRegexp = /^explain/i;
     private readonly ignoreGlobalQueryRegexp = /^ignore global query/i;
+    private readonly top3DisplayRegexp = /^top3 display (all|latest|count)/i;
 
     logger = logging.getLogger('tasks.Query');
     // Used internally to uniquely log each query execution in the console.
@@ -136,6 +137,9 @@ export class Query implements IQuery {
                 break;
             case this.ignoreGlobalQueryRegexp.test(line):
                 this._ignoreGlobalQuery = true;
+                break;
+            case this.top3DisplayRegexp.test(line):
+                this.parseTop3Display(line, statement);
                 break;
             case this.limitRegexp.test(line):
                 this.parseLimit(line);
@@ -468,6 +472,26 @@ ${statement.explainStatement('    ')}
             return true;
         }
         return false;
+    }
+
+    private parseTop3Display(line: string, statement: Statement): void {
+        const match = line.match(this.top3DisplayRegexp);
+        if (match === null) {
+            return;
+        }
+        const mode = match[1].toLowerCase();
+        switch (mode) {
+            case 'all':
+                this._queryLayoutOptions.top3DisplayMode = Top3DisplayMode.All;
+                break;
+            case 'latest':
+                this._queryLayoutOptions.top3DisplayMode = Top3DisplayMode.Latest;
+                break;
+            case 'count':
+                this._queryLayoutOptions.top3DisplayMode = Top3DisplayMode.Count;
+                break;
+        }
+        this.saveLayoutStatement(statement);
     }
 
     private parsePreset(line: string, statement: Statement) {

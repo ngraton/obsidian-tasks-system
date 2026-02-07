@@ -1,3 +1,4 @@
+import type { QueryLayoutOptions } from '../Layout/QueryLayoutOptions';
 import { TaskLayoutComponent } from '../Layout/TaskLayoutOptions';
 import { PriorityTools } from '../lib/PriorityTools';
 import type { Priority } from '../Task/Priority';
@@ -109,8 +110,13 @@ export class DataviewTaskSerializer extends DefaultTaskSerializer {
         return PriorityTools.priorityValue(p);
     }
 
-    public componentToString(task: Task, shortMode: boolean, component: TaskLayoutComponent) {
-        const stringComponent = super.componentToString(task, shortMode, component);
+    public componentToString(
+        task: Task,
+        shortMode: boolean,
+        component: TaskLayoutComponent,
+        queryLayoutOptions?: QueryLayoutOptions,
+    ) {
+        const stringComponent = super.componentToString(task, shortMode, component, queryLayoutOptions);
         const notInlineFieldComponents: TaskLayoutComponent[] = [
             TaskLayoutComponent.BlockLink,
             TaskLayoutComponent.Description,

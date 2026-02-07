@@ -217,6 +217,7 @@ export class TaskLineRenderer {
                 task,
                 this.queryLayoutOptions.shortMode,
                 component,
+                this.queryLayoutOptions,
             );
             if (componentString) {
                 // Create the text span that will hold the rendered component

@@ -1,4 +1,5 @@
 import type { Moment } from 'moment';
+import { type QueryLayoutOptions, Top3DisplayMode } from '../Layout/QueryLayoutOptions';
 import { TaskLayoutComponent, TaskLayoutOptions } from '../Layout/TaskLayoutOptions';
 import { OnCompletion, parseOnCompletionValue } from '../Task/OnCompletion';
 import { Occurrence } from '../Task/Occurrence';
@@ -167,7 +168,12 @@ export class DefaultTaskSerializer implements TaskSerializer {
     /**
      * Renders a specific TaskLayoutComponent of the task (its description, priority, etc) as a string.
      */
-    public componentToString(task: Task, shortMode: boolean, component: TaskLayoutComponent) {
+    public componentToString(
+        task: Task,
+        shortMode: boolean,
+        component: TaskLayoutComponent,
+        queryLayoutOptions?: QueryLayoutOptions,
+    ) {
         const {
             // NEW_TASK_FIELD_EDIT_REQUIRED
             prioritySymbols,
@@ -229,13 +235,31 @@ export class DefaultTaskSerializer implements TaskSerializer {
             }
             case TaskLayoutComponent.Id:
                 return symbolAndStringValue(shortMode, idSymbol, task.id);
-            case TaskLayoutComponent.Top3Dates:
+            case TaskLayoutComponent.Top3Dates: {
                 if (task.top3Dates.length === 0) return '';
-                return symbolAndStringValue(
-                    shortMode,
-                    top3DateSymbol,
-                    task.top3Dates.map((d) => d.format(TaskRegularExpressions.dateFormat)).join(','),
-                );
+                const displayMode = queryLayoutOptions?.top3DisplayMode ?? Top3DisplayMode.All;
+                let displayValue: string;
+                switch (displayMode) {
+                    case Top3DisplayMode.Latest: {
+                        // Show only the most recent date
+                        const latestDate = task.top3Dates.reduce((latest, current) =>
+                            current.isAfter(latest) ? current : latest,
+                        );
+                        displayValue = latestDate.format(TaskRegularExpressions.dateFormat);
+                        break;
+                    }
+                    case Top3DisplayMode.Count:
+                        // Show count instead of dates
+                        displayValue = String(task.top3Count);
+                        break;
+                    case Top3DisplayMode.All:
+                    default:
+                        // Show all dates
+                        displayValue = task.top3Dates.map((d) => d.format(TaskRegularExpressions.dateFormat)).join(',');
+                        break;
+                }
+                return symbolAndStringValue(shortMode, top3DateSymbol, displayValue);
+            }
             case TaskLayoutComponent.BlockLink:
                 return task.blockLink ?? '';
             default:

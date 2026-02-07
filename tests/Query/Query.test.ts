@@ -181,6 +181,7 @@ description includes \
         'has start date',
         'has tag',
         'has tags',
+        'has top3 date',
         'heading does not include wibble',
         'heading includes AND', // Verify Query doesn't confuse this with a boolean query
         'heading includes wibble',
@@ -203,6 +204,7 @@ description includes \
         'no start date',
         'no tag',
         'no tags',
+        'no top3 date',
         'not done',
         'path does not include some/path',
         'path includes AND', // Verify Query doesn't confuse this with a boolean query
@@ -242,6 +244,10 @@ description includes \
         'tags do not include sometag',
         'tags include #sometag',
         'tags include sometag',
+        'top3 after 2021-12-27',
+        'top3 before 2021-12-27',
+        'top3 on 2021-12-27',
+        'top3 this week',
     ];
 
     const notValidWhenCapitalised: ReadonlyArray<string> = filters.filter((line) =>
@@ -376,6 +382,8 @@ description includes \
             'sort by tag 5',
             'sort by tag reverse',
             'sort by tag reverse 3',
+            'sort by top3',
+            'sort by top3 reverse',
             'sort by urgency',
             'sort by urgency reverse',
         ];
@@ -458,6 +466,8 @@ description includes \
             'group by status.type reverse',
             'group by tags',
             'group by tags reverse',
+            'group by top3',
+            'group by top3 reverse',
             'group by urgency',
             'group by urgency reverse',
         ];

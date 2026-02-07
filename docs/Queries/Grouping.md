@@ -533,6 +533,19 @@ group by function task.happens.format("YYYY-MM-DD dddd")
 
 For more examples, see [[#Due Date]].
 
+### Top 3 Date
+
+- `group by top3`
+  - Groups tasks by their Top 3 count, creating headings like:
+    - `No top3 dates`
+    - `Top3: 1 time`
+    - `Top3: 2 times`
+    - `Top3: 3 times`
+
+This is useful for identifying tasks that have been prioritized multiple times.
+
+For more information, see [[Top3|Top 3 Dates]].
+
 ## Group by Other Task Properties
 
 As well as the date-related groups above, groups can be created from properties in individual tasks.
