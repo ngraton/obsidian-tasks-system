@@ -28,6 +28,7 @@
         cancelledDateSymbol,
         createdDateSymbol,
         doneDateSymbol,
+        top3DateSymbol,
     } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
     let descriptionInput: HTMLTextAreaElement;
@@ -164,6 +165,23 @@ Availability of access keys:
             <PriorityEditor bind:priority={editableTask.priority} {withAccessKeys} />
         </section>
         <hr id="line-after-priority" />
+    {/if}
+
+    <!-- --------------------------------------------------------------------------- -->
+    <!--  Top 3 Dates  -->
+    <!-- --------------------------------------------------------------------------- -->
+    {#if isShownInEditModal.top3Dates}
+        <section class="tasks-modal-top3dates-section">
+            <label for="top3Dates">{top3DateSymbol} Top 3 Dates</label>
+            <input
+                bind:value={editableTask.top3Dates}
+                id="top3Dates"
+                type="text"
+                class="tasks-modal-top3dates"
+                placeholder="2026-02-03,2026-02-04"
+            />
+        </section>
+        <hr id="line-after-top3dates" />
     {/if}
 
     <!-- --------------------------------------------------------------------------- -->

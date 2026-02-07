@@ -32,6 +32,7 @@ export class EditableTask {
     dueDate: string;
     doneDate: string;
     cancelledDate: string;
+    top3Dates: string;
     forwardOnly: boolean;
     blockedBy: Task[];
     blocking: Task[];
@@ -52,6 +53,7 @@ export class EditableTask {
         dueDate: string;
         doneDate: string;
         cancelledDate: string;
+        top3Dates: string;
         forwardOnly: boolean;
         blockedBy: Task[];
         blocking: Task[];
@@ -70,6 +72,7 @@ export class EditableTask {
         this.dueDate = editableTask.dueDate;
         this.doneDate = editableTask.doneDate;
         this.cancelledDate = editableTask.cancelledDate;
+        this.top3Dates = editableTask.top3Dates;
         this.forwardOnly = editableTask.forwardOnly;
         this.blockedBy = editableTask.blockedBy;
         this.blocking = editableTask.blocking;
@@ -130,6 +133,7 @@ export class EditableTask {
             dueDate: task.due.formatAsDate(),
             doneDate: task.done.formatAsDate(),
             cancelledDate: task.cancelled.formatAsDate(),
+            top3Dates: task.top3Dates.map((d) => d.format('YYYY-MM-DD')).join(','),
             forwardOnly: true,
             blockedBy: blockedBy,
             blocking: originalBlocking,
@@ -207,6 +211,12 @@ export class EditableTask {
             cancelledDate,
             dependsOn: blockedByWithIds.map((task) => task.id),
             id,
+            top3Dates: this.top3Dates
+                ? this.top3Dates
+                      .split(',')
+                      .filter((s) => s.trim() !== '')
+                      .map((s) => window.moment(s.trim(), 'YYYY-MM-DD'))
+                : [],
         });
 
         for (const blocking of removedBlocking) {

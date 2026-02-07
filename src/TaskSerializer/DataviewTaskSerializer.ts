@@ -79,6 +79,7 @@ export const DATAVIEW_SYMBOLS = {
     onCompletionSymbol: 'onCompletion::',
     idSymbol: 'id::',
     dependsOnSymbol: 'dependsOn::',
+    top3DateSymbol: 'top3Date::',
     TaskFormatRegularExpressions: {
         priorityRegex: toInlineFieldRegex(/priority:: *(highest|high|medium|low|lowest)/),
         startDateRegex: toInlineFieldRegex(/start:: *(\d{4}-\d{2}-\d{2})/),
@@ -91,6 +92,7 @@ export const DATAVIEW_SYMBOLS = {
         onCompletionRegex: toInlineFieldRegex(/onCompletion:: *([a-zA-Z]+)/),
         dependsOnRegex: toInlineFieldRegex(new RegExp('dependsOn:: *(' + taskIdSequenceRegex.source + ')')),
         idRegex: toInlineFieldRegex(new RegExp('id:: *(' + taskIdRegex.source + ')')),
+        top3DateRegex: toInlineFieldRegex(/top3Date:: *(\d{4}-\d{2}-\d{2}(?:,\d{4}-\d{2}-\d{2})*)/),
     },
 } as const;
 

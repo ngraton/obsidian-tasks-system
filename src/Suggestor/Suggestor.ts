@@ -162,6 +162,8 @@ function addTaskPropertySuggestions(
         addField(genericSuggestions, line, symbols.dependsOnSymbol, 'depends on id');
     }
 
+    addField(genericSuggestions, line, symbols.top3DateSymbol, 'top 3 dates');
+
     addField(genericSuggestions, line, symbols.onCompletionSymbol, 'on completion');
 
     const matchingSuggestions = filterGeneralSuggestionsForWordAtCursor(genericSuggestions, parameters);

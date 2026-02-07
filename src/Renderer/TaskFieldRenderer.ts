@@ -188,5 +188,6 @@ const taskFieldHTMLData: { [c in TaskLayoutComponent]: TaskFieldHTMLData } = {
     onCompletion: createFieldWithoutDataAttributes('task-onCompletion'),
     dependsOn: createFieldWithoutDataAttributes('task-dependsOn'),
     id: createFieldWithoutDataAttributes('task-id'),
+    top3Dates: createFieldWithoutDataAttributes('task-top3Dates'),
     blockLink: createFieldWithoutDataAttributes('task-block-link'),
 };

@@ -21,6 +21,7 @@ export interface EditModalShowSettings {
     created: boolean;
     done: boolean;
     cancelled: boolean;
+    top3Dates: boolean;
 }
 
 export const defaultEditModalShowSettings: Readonly<EditModalShowSettings> = {
@@ -38,4 +39,5 @@ export const defaultEditModalShowSettings: Readonly<EditModalShowSettings> = {
     created: true,
     done: true,
     cancelled: true,
+    top3Dates: true,
 };

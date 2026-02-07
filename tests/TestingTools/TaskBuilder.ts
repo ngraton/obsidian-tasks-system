@@ -59,6 +59,7 @@ export class TaskBuilder {
     private _scheduledDateIsInferred: boolean = false;
     private _id: string = '';
     private _dependsOn: string[] = [];
+    private _top3Dates: Moment[] = [];
     private _mockData?: SimulatedFile = undefined;
 
     /**
@@ -104,6 +105,7 @@ export class TaskBuilder {
             onCompletion: this._onCompletion,
             dependsOn: this._dependsOn,
             id: this._id,
+            top3Dates: this._top3Dates,
             blockLink: this._blockLink,
             tags: this._tags,
             originalMarkdown: '',
@@ -135,6 +137,7 @@ export class TaskBuilder {
             .onCompletion(OnCompletion.Delete)
             .dependsOn(['123456', 'abc123'])
             .id('abcdef')
+            .top3Dates(['2023-07-01', '2023-07-03'])
             .blockLink(' ^dcf64c')
             // Values in TaskLocation:
             .path('some/folder/fileName.md')
@@ -317,6 +320,11 @@ export class TaskBuilder {
 
     public id(id: string) {
         this._id = id;
+        return this;
+    }
+
+    public top3Dates(dates: string[]) {
+        this._top3Dates = dates.map((d) => DateParser.parseDate(d)).filter((d): d is Moment => d !== null);
         return this;
     }
 

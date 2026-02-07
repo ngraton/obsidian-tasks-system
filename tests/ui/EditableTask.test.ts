@@ -70,6 +70,7 @@ describe('EditableTask tests', () => {
                   "type": "TODO",
                 },
               },
+              "top3Dates": "2023-07-01,2023-07-03",
             }
         `);
     });
@@ -172,7 +173,7 @@ describe('EditableTask tests', () => {
               "indentation": "  ",
               "listMarker": "-",
               "onCompletion": "",
-              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
+              "originalMarkdown": "  - [ ] Do exercises #todo #health 🆔 abcdef ⛔ 123456,abc123 🎯 2023-07-01,2023-07-03 🔼 🔁 every day when done 🏁 delete ➕ 2023-07-01 🛫 2023-07-02 ⏳ 2023-07-03 📅 2023-07-04 ❌ 2023-07-06 ✅ 2023-07-05 ^dcf64c",
               "parent": null,
               "priority": "3",
               "recurrence": null,
@@ -209,6 +210,10 @@ describe('EditableTask tests', () => {
                   "_tags": [],
                 },
               },
+              "top3Dates": [
+                "2023-07-01T00:00:00.000Z",
+                "2023-07-03T00:00:00.000Z",
+              ],
             }
         `);
     });

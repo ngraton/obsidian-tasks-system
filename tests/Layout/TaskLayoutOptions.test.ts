@@ -9,6 +9,7 @@ describe('TaskLayoutOptions', () => {
             "description
             id
             dependsOn
+            top3Dates
             priority
             recurrenceRule
             onCompletion
@@ -65,6 +66,7 @@ describe('TaskLayoutOptions', () => {
             "description
             id
             dependsOn
+            top3Dates
             priority
             recurrenceRule
             onCompletion
@@ -84,6 +86,7 @@ describe('TaskLayoutOptions', () => {
             "description
             id
             dependsOn
+            top3Dates
             priority
             recurrenceRule
             onCompletion
@@ -139,6 +142,7 @@ describe('TaskLayoutOptions', () => {
         expect(options.toggleableComponents.join('\n')).toMatchInlineSnapshot(`
             "id
             dependsOn
+            top3Dates
             priority
             recurrenceRule
             onCompletion

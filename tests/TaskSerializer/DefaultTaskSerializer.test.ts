@@ -76,6 +76,7 @@ describe('validate emoji regular expressions', () => {
             onCompletionRegex: /🏁\\ufe0f? *([a-zA-Z]+)$/
             dependsOnRegex: /⛔\\ufe0f? *([a-zA-Z0-9-_]+( *, *[a-zA-Z0-9-_]+ *)*)$/
             idRegex: /🆔\\ufe0f? *([a-zA-Z0-9-_]+)$/
+            top3DateRegex: /🎯\\ufe0f? *(\\d{4}-\\d{2}-\\d{2}(?:,\\d{4}-\\d{2}-\\d{2})*)$/
             "
         `);
     });
@@ -97,6 +98,7 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
         doneDateSymbol,
         idSymbol,
         dependsOnSymbol,
+        top3DateSymbol,
     } = symbols;
 
     describe('deserialize', () => {
@@ -263,6 +265,44 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             });
         });
 
+        describe('should parse top3 dates', () => {
+            it('should parse a single date', () => {
+                const taskDetails = deserialize(`${top3DateSymbol} 2026-02-01`);
+                expect(taskDetails).toMatchTaskDetails({ top3Dates: [moment('2026-02-01', 'YYYY-MM-DD')] });
+            });
+
+            it('should parse multiple dates', () => {
+                const taskDetails = deserialize(`${top3DateSymbol} 2026-02-01,2026-02-03`);
+                expect(taskDetails).toMatchTaskDetails({
+                    top3Dates: [moment('2026-02-01', 'YYYY-MM-DD'), moment('2026-02-03', 'YYYY-MM-DD')],
+                });
+            });
+
+            it('should parse top3 dates with description', () => {
+                const taskDetails = deserialize(`Fix the auth bug ${top3DateSymbol} 2026-02-01`);
+                expect(taskDetails).toMatchTaskDetails({
+                    description: 'Fix the auth bug',
+                    top3Dates: [moment('2026-02-01', 'YYYY-MM-DD')],
+                });
+            });
+
+            it('should parse top3 dates alongside other fields', () => {
+                const taskDetails = deserialize(
+                    `My task ${top3DateSymbol} 2026-02-01,2026-02-03 ${dueDateSymbol} 2026-02-10`,
+                );
+                expect(taskDetails).toMatchTaskDetails({
+                    description: 'My task',
+                    top3Dates: [moment('2026-02-01', 'YYYY-MM-DD'), moment('2026-02-03', 'YYYY-MM-DD')],
+                    dueDate: moment('2026-02-10', 'YYYY-MM-DD'),
+                });
+            });
+
+            it('should default to empty array when no top3 dates present', () => {
+                const taskDetails = deserialize('Just a task');
+                expect(taskDetails).toMatchTaskDetails({ description: 'Just a task', top3Dates: [] });
+            });
+        });
+
         it('should parse tags', () => {
             const description = ' #hello #world #task';
             const taskDetails = deserialize(description);
@@ -327,6 +367,18 @@ describe.each(symbolMap)("DefaultTaskSerializer with '$taskFormat' symbols", ({ 
             const task = new TaskBuilder().description('').id('abcdef').build();
             const serialized = serialize(task);
             expect(serialized).toEqual(` ${idSymbol} abcdef`);
+        });
+
+        it('should serialize top3 dates', () => {
+            const task = new TaskBuilder().description('').top3Dates(['2026-02-01', '2026-02-03']).build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual(` ${top3DateSymbol} 2026-02-01,2026-02-03`);
+        });
+
+        it('should not serialize empty top3 dates', () => {
+            const task = new TaskBuilder().description('').top3Dates([]).build();
+            const serialized = serialize(task);
+            expect(serialized).toEqual('');
         });
 
         it('should serialize tags', () => {

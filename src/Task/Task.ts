@@ -59,6 +59,12 @@ export class Task extends ListItem {
     public readonly dependsOn: string[];
     public readonly id: string;
 
+    public readonly top3Dates: Moment[];
+
+    public get top3Count(): number {
+        return this.top3Dates.length;
+    }
+
     /** The blockLink is a "^" annotation after the dates/recurrence rules.
      * Any non-empty value must begin with ' ^'. */
     public readonly blockLink: string;
@@ -85,6 +91,7 @@ export class Task extends ListItem {
         onCompletion,
         dependsOn,
         id,
+        top3Dates,
         blockLink,
         tags,
         originalMarkdown,
@@ -108,6 +115,7 @@ export class Task extends ListItem {
         onCompletion: OnCompletion;
         dependsOn: string[] | [];
         id: string;
+        top3Dates: Moment[];
         blockLink: string;
         tags: string[] | [];
         originalMarkdown: string;
@@ -142,6 +150,7 @@ export class Task extends ListItem {
 
         this.dependsOn = dependsOn;
         this.id = id;
+        this.top3Dates = top3Dates;
 
         this.blockLink = blockLink;
 
@@ -785,6 +794,7 @@ export class Task extends ListItem {
             'id',
             'dependsOn',
             'onCompletion',
+            'top3Dates',
         ];
         for (const el of args) {
             if (this[el]?.toString() !== other[el]?.toString()) return false;

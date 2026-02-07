@@ -407,6 +407,7 @@ export class TaskLineRenderer {
             dueDateSymbol,
             cancelledDateSymbol,
             doneDateSymbol,
+            top3DateSymbol,
         } = TASK_FORMATS.tasksPluginEmoji.taskSerializer.symbols;
 
         element.addEventListener('mouseenter', () => {
@@ -443,6 +444,12 @@ export class TaskLineRenderer {
             addDateToTooltip(tooltip, task.dueDate, dueDateSymbol);
             addDateToTooltip(tooltip, task.cancelledDate, cancelledDateSymbol);
             addDateToTooltip(tooltip, task.doneDate, doneDateSymbol);
+
+            if (task.top3Dates.length > 0) {
+                const top3Div = tooltip.createDiv();
+                const datesStr = task.top3Dates.map((d) => d.format(TaskRegularExpressions.dateFormat)).join(', ');
+                top3Div.setText(`${top3DateSymbol} ${task.top3Count} times (${datesStr})`);
+            }
 
             const linkText = task.getLinkText({ isFilenameUnique });
             if (linkText) {

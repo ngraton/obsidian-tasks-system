@@ -96,6 +96,7 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
             onCompletion: OnCompletion.Ignore,
             dependsOn: [],
             id: '',
+            top3Dates: [],
             blockLink: '',
             tags: [],
             originalMarkdown: '',
@@ -141,5 +142,6 @@ export const taskFromLine = ({ line, path }: { line: string; path: string }): Ta
         scheduledDateIsInferred: false,
         id: '',
         dependsOn: [],
+        top3Dates: [],
     });
 };

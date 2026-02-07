@@ -33,6 +33,7 @@ export interface DefaultTaskSerializerSymbols {
     readonly onCompletionSymbol: string;
     readonly idSymbol: string;
     readonly dependsOnSymbol: string;
+    readonly top3DateSymbol: string;
     readonly TaskFormatRegularExpressions: {
         priorityRegex: RegExp;
         startDateRegex: RegExp;
@@ -45,6 +46,7 @@ export interface DefaultTaskSerializerSymbols {
         onCompletionRegex: RegExp;
         idRegex: RegExp;
         dependsOnRegex: RegExp;
+        top3DateRegex: RegExp;
     };
 }
 
@@ -94,6 +96,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
     onCompletionSymbol: '🏁',
     dependsOnSymbol: '⛔',
     idSymbol: '🆔',
+    top3DateSymbol: '🎯',
     TaskFormatRegularExpressions: {
         priorityRegex: fieldRegex('(🔺|⏫|🔼|🔽|⏬)', ''),
         startDateRegex: dateFieldRegex('🛫'),
@@ -106,6 +109,7 @@ export const DEFAULT_SYMBOLS: DefaultTaskSerializerSymbols = {
         onCompletionRegex: fieldRegex('🏁', '([a-zA-Z]+)'),
         dependsOnRegex: fieldRegex('⛔', '(' + taskIdSequenceRegex.source + ')'),
         idRegex: fieldRegex('🆔', '(' + taskIdRegex.source + ')'),
+        top3DateRegex: fieldRegex('🎯', '(\\d{4}-\\d{2}-\\d{2}(?:,\\d{4}-\\d{2}-\\d{2})*)'),
     },
 } as const;
 
@@ -177,6 +181,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             dueDateSymbol,
             dependsOnSymbol,
             idSymbol,
+            top3DateSymbol,
         } = this.symbols;
 
         switch (component) {
@@ -224,6 +229,13 @@ export class DefaultTaskSerializer implements TaskSerializer {
             }
             case TaskLayoutComponent.Id:
                 return symbolAndStringValue(shortMode, idSymbol, task.id);
+            case TaskLayoutComponent.Top3Dates:
+                if (task.top3Dates.length === 0) return '';
+                return symbolAndStringValue(
+                    shortMode,
+                    top3DateSymbol,
+                    task.top3Dates.map((d) => d.format(TaskRegularExpressions.dateFormat)).join(','),
+                );
             case TaskLayoutComponent.BlockLink:
                 return task.blockLink ?? '';
             default:
@@ -283,6 +295,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
         let onCompletion: OnCompletion = OnCompletion.Ignore;
         let id: string = '';
         let dependsOn: string[] | [] = [];
+        let top3Dates: Moment[] = [];
         // Tags that are removed from the end while parsing, but we want to add them back for being part of the description.
         // In the original task description they are possibly mixed with other components
         // (e.g. #tag1 <due date> #tag2), they do not have to all trail all task components,
@@ -391,6 +404,17 @@ export class DefaultTaskSerializer implements TaskSerializer {
                 matched = true;
             }
 
+            const top3DateMatch = line.match(TaskFormatRegularExpressions.top3DateRegex);
+
+            if (top3DateMatch != null) {
+                line = line.replace(TaskFormatRegularExpressions.top3DateRegex, '').trim();
+                top3Dates = top3DateMatch[1]
+                    .split(',')
+                    .filter((item) => item !== '')
+                    .map((item) => window.moment(item.trim(), TaskRegularExpressions.dateFormat));
+                matched = true;
+            }
+
             runs++;
         } while (matched && runs <= maxRuns);
 
@@ -421,6 +445,7 @@ export class DefaultTaskSerializer implements TaskSerializer {
             onCompletion,
             id,
             dependsOn,
+            top3Dates,
             tags: Task.extractHashtags(line),
         };
     }

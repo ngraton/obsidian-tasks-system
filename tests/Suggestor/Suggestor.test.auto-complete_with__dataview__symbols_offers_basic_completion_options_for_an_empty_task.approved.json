@@ -55,6 +55,10 @@
     "appendText": "dependsOn:: "
   },
   {
+    "displayText": "top3Date:: top 3 dates",
+    "appendText": "top3Date:: "
+  },
+  {
     "displayText": "onCompletion:: on completion",
     "appendText": "onCompletion:: "
   }

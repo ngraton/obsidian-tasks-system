@@ -54,6 +54,10 @@
     "appendText": "⛔ "
   },
   {
+    "displayText": "🎯 top 3 dates",
+    "appendText": "🎯 "
+  },
+  {
     "displayText": "🏁 on completion",
     "appendText": "🏁 "
   }

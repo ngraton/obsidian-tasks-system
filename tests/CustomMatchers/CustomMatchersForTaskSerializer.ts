@@ -61,6 +61,10 @@ function isTaskDetails(val: any): val is TaskDetails {
         return false;
     }
 
+    if (!Array.isArray(val.top3Dates)) {
+        return false;
+    }
+
     return true;
 }
 
@@ -86,6 +90,7 @@ function summarizeTaskDetails(t: TaskDetails | null): SummarizedTaskDetails | nu
         cancelledDate: t.cancelledDate?.format(TaskRegularExpressions.dateFormat) ?? null,
         recurrence: t.recurrence?.toText() ?? null,
         id: t.id?.valueOf().toString() ?? null,
+        top3Dates: t.top3Dates.map((d) => d.format(TaskRegularExpressions.dateFormat)).join(','),
     };
 }
 
@@ -113,6 +118,7 @@ function tryBuildTaskDetails(t: object): TaskDetails | null {
         onCompletion: '',
         dependsOn: [],
         id: '',
+        top3Dates: [],
         tags: [],
         ...t,
     };
