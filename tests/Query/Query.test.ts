@@ -244,6 +244,7 @@ description includes \
         'tags do not include sometag',
         'tags include #sometag',
         'tags include sometag',
+        'top3 2021-12-27',
         'top3 after 2021-12-27',
         'top3 before 2021-12-27',
         'top3 on 2021-12-27',
